@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vocamine Support</title>
+    <meta
+      name="description"
+      content="Support page for Vocamine, a science-backed vocabulary learning app built around spaced repetition."
+    />
+    <style>
+      :root {
+        --bg-top: #0b4b76;
+        --bg-bottom: #0a1c78;
+        --surface: rgba(8, 16, 48, 0.34);
+        --surface-strong: rgba(7, 13, 36, 0.58);
+        --border: rgba(255, 255, 255, 0.14);
+        --text: #f7f8fc;
+        --muted: #bfd6f4;
+        --accent: #7cd2ff;
+        --accent-strong: #5bbdff;
+        --shadow: 0 20px 50px rgba(0, 0, 0, 0.24);
+        --radius-lg: 28px;
+        --radius-md: 18px;
+        --max-width: 1080px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(circle at top left, rgba(124, 210, 255, 0.14), transparent 30%),
+          linear-gradient(180deg, var(--bg-top), var(--bg-bottom));
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .page {
+        width: min(var(--max-width), calc(100% - 32px));
+        margin: 0 auto;
+        padding: 28px 0 56px;
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 28px;
+      }
+
+      .brand {
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(2rem, 4vw, 3.4rem);
+        font-style: italic;
+        font-weight: 600;
+        letter-spacing: -0.03em;
+        text-decoration: none;
+      }
+
+      .nav-actions {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .lang-switch {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.06);
+      }
+
+      .lang-switch button {
+        min-width: 76px;
+        min-height: 40px;
+        padding: 0 14px;
+        border: 0;
+        border-radius: 999px;
+        background: transparent;
+        color: var(--muted);
+        font: inherit;
+        font-weight: 700;
+        cursor: pointer;
+        transition:
+          background 160ms ease,
+          color 160ms ease,
+          transform 160ms ease;
+      }
+
+      .lang-switch button:hover {
+        transform: translateY(-1px);
+        color: var(--text);
+      }
+
+      .lang-switch button.is-active {
+        background: linear-gradient(135deg, var(--accent-strong), var(--accent));
+        color: #05203a;
+      }
+
+      .nav-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .nav-links a,
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        min-height: 44px;
+        padding: 0 16px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--text);
+        text-decoration: none;
+        font-weight: 600;
+        transition:
+          transform 160ms ease,
+          background 160ms ease,
+          border-color 160ms ease;
+      }
+
+      .nav-links a:hover,
+      .button:hover {
+        transform: translateY(-1px);
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.22);
+      }
+
+      .hero {
+        position: relative;
+        overflow: hidden;
+        padding: clamp(28px, 6vw, 56px);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        background:
+          linear-gradient(160deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.02)),
+          var(--surface);
+        box-shadow: var(--shadow);
+      }
+
+      .hero::after {
+        content: "";
+        position: absolute;
+        inset: auto -12% -24% auto;
+        width: min(34vw, 360px);
+        aspect-ratio: 1;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(124, 210, 255, 0.18), transparent 65%);
+        pointer-events: none;
+      }
+
+      .eyebrow {
+        margin: 0 0 14px;
+        color: var(--accent);
+        font-size: 0.95rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin: 0;
+      }
+
+      .hero h1 {
+        max-width: 13ch;
+        font-size: clamp(2.4rem, 8vw, 5rem);
+        line-height: 0.96;
+        letter-spacing: -0.04em;
+      }
+
+      .hero p {
+        max-width: 60ch;
+        margin-top: 20px;
+        color: var(--muted);
+        font-size: clamp(1rem, 1.6vw, 1.15rem);
+        line-height: 1.65;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 24px;
+      }
+
+      .button.primary {
+        background: linear-gradient(135deg, var(--accent-strong), var(--accent));
+        border-color: transparent;
+        color: #05203a;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 18px;
+        margin-top: 24px;
+      }
+
+      .card {
+        padding: 24px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+        background: var(--surface-strong);
+        box-shadow: var(--shadow);
+      }
+
+      .card h2 {
+        margin-bottom: 12px;
+        font-size: 1.25rem;
+        letter-spacing: -0.02em;
+      }
+
+      .card p,
+      .card li {
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      .span-7 {
+        grid-column: span 7;
+      }
+
+      .span-5 {
+        grid-column: span 5;
+      }
+
+      .span-6 {
+        grid-column: span 6;
+      }
+
+      .span-12 {
+        grid-column: 1 / -1;
+      }
+
+      .stack {
+        display: grid;
+        gap: 14px;
+      }
+
+      ul {
+        margin: 0;
+        padding-left: 18px;
+      }
+
+      .quick-links {
+        display: grid;
+        gap: 12px;
+      }
+
+      .link-card {
+        padding: 16px 18px;
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.04);
+        text-decoration: none;
+      }
+
+      .link-card strong {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 1rem;
+      }
+
+      .faq details {
+        padding: 16px 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .faq details:first-of-type {
+        border-top: 0;
+        padding-top: 0;
+      }
+
+      .faq summary {
+        cursor: pointer;
+        list-style: none;
+        font-weight: 700;
+      }
+
+      .faq summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .faq p {
+        margin-top: 10px;
+      }
+
+      .steps {
+        counter-reset: support-step;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: grid;
+        gap: 12px;
+      }
+
+      .steps li {
+        display: grid;
+        grid-template-columns: 34px 1fr;
+        gap: 12px;
+        align-items: start;
+      }
+
+      .steps li::before {
+        counter-increment: support-step;
+        content: counter(support-step);
+        display: grid;
+        place-items: center;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: rgba(124, 210, 255, 0.18);
+        color: var(--accent);
+        font-weight: 800;
+      }
+
+      .footer {
+        margin-top: 24px;
+        padding: 0 4px;
+        color: var(--muted);
+        font-size: 0.95rem;
+        text-align: center;
+      }
+
+      .muted {
+        color: var(--muted);
+      }
+
+      .policy-content {
+        display: grid;
+        gap: 20px;
+      }
+
+      .policy-intro {
+        margin-bottom: 6px;
+      }
+
+      .policy-group {
+        display: grid;
+        gap: 10px;
+      }
+
+      .policy-group h3 {
+        margin: 0;
+        font-size: 1rem;
+        letter-spacing: -0.01em;
+      }
+
+      .policy-group p {
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .policy-group ul {
+        display: grid;
+        gap: 8px;
+      }
+
+      @media (max-width: 860px) {
+        .span-7,
+        .span-6,
+        .span-5 {
+          grid-column: 1 / -1;
+        }
+
+        .nav {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        .nav-actions {
+          width: 100%;
+          justify-content: flex-start;
+        }
+      }
+
+      @media (max-width: 560px) {
+        .page {
+          width: min(var(--max-width), calc(100% - 20px));
+          padding-top: 16px;
+        }
+
+        .card,
+        .hero {
+          padding: 20px;
+        }
+
+        .hero-actions,
+        .nav-links,
+        .nav-actions {
+          width: 100%;
+        }
+
+        .nav-links a,
+        .button,
+        .lang-switch {
+          width: 100%;
+        }
+
+        .lang-switch {
+          justify-content: space-between;
+        }
+
+        .lang-switch button {
+          flex: 1;
+          min-width: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <header class="nav">
+        <a class="brand" href="#top">Vocamine</a>
+        <div class="nav-actions">
+          <div class="lang-switch" id="language-switch" role="group" aria-label="Language switch">
+            <button type="button" data-lang-option="ko">한국어</button>
+            <button type="button" data-lang-option="en">English</button>
+            <button type="button" data-lang-option="fr">Français</button>
+          </div>
+          <nav class="nav-links" id="primary-nav" aria-label="Primary">
+            <a href="#faq" data-i18n="navFaq">FAQ</a>
+            <a href="#troubleshooting" data-i18n="navTroubleshooting">Troubleshooting</a>
+            <a href="#privacy" data-i18n="navPrivacy">Privacy</a>
+            <a href="#terms" data-i18n="navTerms">Terms</a>
+            <a id="nav-email-link" href="mailto:gox@me.com" data-i18n="navEmail"
+              >Email support</a
+            >
+          </nav>
+        </div>
+      </header>
+
+      <section class="hero" id="top">
+        <p class="eyebrow" data-i18n="eyebrow">Support</p>
+        <h1 data-i18n="heroTitle">Help for your daily vocabulary routine.</h1>
+        <p data-i18n="heroBody">
+          Vocamine helps you build long-term vocabulary through spaced repetition,
+          level-based learning, and practical examples. If something is not working,
+          start with the quick links and FAQs below.
+        </p>
+        <div class="hero-actions">
+          <a
+            id="hero-primary-link"
+            class="button primary"
+            href="mailto:gox@me.com"
+            data-i18n="heroPrimary"
+            >Email support</a
+          >
+          <a
+            id="hero-secondary-link"
+            class="button"
+            href="mailto:gox@me.com"
+            data-i18n="heroSecondary"
+            >Report a bug</a
+          >
+        </div>
+      </section>
+
+      <section class="grid" aria-label="Support sections">
+        <article class="card span-7">
+          <h2 data-i18n="offersTitle">What Vocamine offers</h2>
+          <div class="stack">
+            <p data-i18n="offersBody1">
+              Vocamine is a vocabulary learning app built around science-backed review.
+              It currently supports English and French learning with personalized daily
+              goals, CEFR-based difficulty, spaced repetition, pronunciation, example
+              sentences, and word-form support.
+            </p>
+            <p data-i18n="offersBody2">
+              Core study flows are designed to work offline after vocabulary data has been
+              loaded on your device, so you can keep learning without a stable connection.
+            </p>
+          </div>
+        </article>
+
+        <aside class="card span-5">
+          <h2 data-i18n="quickLinksTitle">Quick links</h2>
+          <div class="quick-links">
+            <a
+              id="quick-bug-link"
+              class="link-card"
+              href="mailto:gox@me.com"
+            >
+              <strong data-i18n="quickBugTitle">Report a bug</strong>
+              <span class="muted" data-i18n="quickBugBody"
+                >Share steps, screenshots, and device details.</span
+              >
+            </a>
+            <a
+              id="quick-question-link"
+              class="link-card"
+              href="mailto:gox@me.com"
+            >
+              <strong data-i18n="quickQuestionTitle">Ask a question</strong>
+              <span class="muted" data-i18n="quickQuestionBody"
+                >Contact support for help with learning, settings, or reminders.</span
+              >
+            </a>
+            <a
+              id="quick-feedback-link"
+              class="link-card"
+              href="mailto:gox@me.com"
+            >
+              <strong data-i18n="quickFeedbackTitle">Send feedback</strong>
+              <span class="muted" data-i18n="quickFeedbackBody"
+                >Share ideas, feature requests, or general feedback by email.</span
+              >
+            </a>
+          </div>
+        </aside>
+
+        <article class="card span-6 faq" id="faq">
+          <h2 data-i18n="faqTitle">FAQ</h2>
+          <details open>
+            <summary data-i18n="faq1Q">Why am I not seeing new words?</summary>
+            <p data-i18n="faq1A">
+              You may have finished the current CEFR level for your learning language, or
+              today&apos;s queue may already be complete. Check your level and daily goal in
+              the app profile, then continue with the next level or additional learning.
+            </p>
+          </details>
+          <details>
+            <summary data-i18n="faq2Q">Why is audio unavailable?</summary>
+            <p data-i18n="faq2A">
+              Pronunciation depends on voices installed on your device. If playback does
+              not start, open the voice settings in the app and install an offline voice
+              for the learning language.
+            </p>
+          </details>
+          <details>
+            <summary data-i18n="faq3Q">Can I switch between English and French?</summary>
+            <p data-i18n="faq3A">
+              Yes. Vocamine keeps language-specific settings, so your level, daily goal,
+              notifications, and progress can be managed separately.
+            </p>
+          </details>
+          <details>
+            <summary data-i18n="faq4Q">Does the app work offline?</summary>
+            <p data-i18n="faq4A">
+              Yes for core study after vocabulary data is available on the device. Some
+              account, sync, and recovery features still require connectivity.
+            </p>
+          </details>
+          <details>
+            <summary data-i18n="faq5Q">How do reminders work?</summary>
+            <p data-i18n="faq5A">
+              Reminders are configured per learning language. You can enable or change
+              them from the profile screen inside the app.
+            </p>
+          </details>
+        </article>
+
+        <article class="card span-6" id="troubleshooting">
+          <h2 data-i18n="troubleshootingTitle">Troubleshooting</h2>
+          <ol class="steps" id="steps-list"></ol>
+        </article>
+
+        <article class="card span-12">
+          <h2 data-i18n="reportingTitle">When reporting a problem</h2>
+          <ul id="reporting-list"></ul>
+        </article>
+
+        <article class="card span-12" id="privacy">
+          <h2 data-i18n="privacyTitle">Privacy Policy</h2>
+          <p class="policy-intro muted" data-i18n="privacyIntro">
+            This policy explains what information Vocamine may process and how it is used.
+          </p>
+          <div class="policy-content" id="privacy-content"></div>
+        </article>
+
+        <article class="card span-12" id="terms">
+          <h2 data-i18n="termsTitle">Terms of Use</h2>
+          <p class="policy-intro muted" data-i18n="termsIntro">
+            These terms describe the basic rules for using Vocamine.
+          </p>
+          <div class="policy-content" id="terms-content"></div>
+        </article>
+      </section>
+
+      <p class="footer" data-i18n="footer">
+        Vocamine Support Page · Last updated March 7, 2026
+      </p>
+    </main>
+
+    <script>
+      const translations = {
+        ko: {
+          title: "Vocamine 지원",
+          metaDescription: "간격 반복 기반 어휘 학습 앱 Vocamine의 지원 페이지입니다.",
+          navPrimary: "주요 메뉴",
+          langSwitch: "언어 전환",
+          navFaq: "자주 묻는 질문",
+          navTroubleshooting: "문제 해결",
+          navPrivacy: "개인정보 처리방침",
+          navTerms: "이용약관",
+          navEmail: "이메일 문의",
+          eyebrow: "지원",
+          heroTitle: "매일의 어휘 학습을 위한 지원 안내",
+          heroBody:
+            "Vocamine은 간격 반복, 레벨 기반 학습, 실전 예문을 바탕으로 오래 남는 어휘 학습을 돕습니다. 문제가 생겼다면 아래 빠른 링크와 FAQ부터 확인해 주세요.",
+          heroPrimary: "이메일로 문의",
+          heroSecondary: "버그 제보",
+          offersTitle: "Vocamine이 제공하는 것",
+          offersBody1:
+            "Vocamine은 과학적으로 설계된 복습을 중심으로 만든 어휘 학습 앱입니다. 현재 영어와 프랑스어 학습을 지원하며, 개인화된 일일 목표, CEFR 기반 난이도, 간격 반복, 발음, 예문, 활용형 확인 기능을 제공합니다.",
+          offersBody2:
+            "기기 안에 어휘 데이터가 준비된 뒤에는 핵심 학습 흐름을 오프라인으로도 사용할 수 있어, 연결이 불안정해도 계속 학습할 수 있습니다.",
+          quickLinksTitle: "빠른 링크",
+          quickBugTitle: "버그 제보",
+          quickBugBody: "재현 방법, 스크린샷, 기기 정보를 함께 알려주세요.",
+          quickQuestionTitle: "문의하기",
+          quickQuestionBody: "학습, 설정, 알림 관련 도움이 필요하면 이메일로 문의해 주세요.",
+          quickFeedbackTitle: "피드백 보내기",
+          quickFeedbackBody: "기능 제안이나 일반 피드백도 이메일로 받을 수 있습니다.",
+          faqTitle: "자주 묻는 질문",
+          faq1Q: "새 단어가 보이지 않는 이유는 무엇인가요?",
+          faq1A:
+            "현재 학습 언어의 CEFR 레벨 단어를 모두 학습했거나, 오늘의 학습 큐를 이미 완료했을 수 있습니다. 앱 프로필에서 레벨과 일일 목표를 확인한 뒤 다음 레벨이나 추가 학습을 진행해 주세요.",
+          faq2Q: "오디오가 재생되지 않는 이유는 무엇인가요?",
+          faq2A:
+            "발음 재생은 기기에 설치된 음성에 따라 달라집니다. 재생이 시작되지 않으면 앱의 음성 설정 화면에서 해당 학습 언어의 오프라인 음성을 설치해 주세요.",
+          faq3Q: "영어와 프랑스어를 번갈아 학습할 수 있나요?",
+          faq3A:
+            "네. Vocamine은 언어별 설정을 따로 보관하므로 레벨, 일일 목표, 알림, 학습 기록을 각각 관리할 수 있습니다.",
+          faq4Q: "오프라인에서도 사용할 수 있나요?",
+          faq4A:
+            "기기에 어휘 데이터가 준비된 뒤에는 핵심 학습은 오프라인으로 가능합니다. 다만 계정, 동기화, 일부 복구 기능은 인터넷 연결이 필요합니다.",
+          faq5Q: "알림은 어떻게 동작하나요?",
+          faq5A:
+            "알림은 학습 언어별로 설정됩니다. 앱 내 프로필 화면에서 켜거나 시간을 변경할 수 있습니다.",
+          troubleshootingTitle: "문제 해결",
+          steps: [
+            {
+              title: "앱을 다시 실행하세요.",
+              body: "일시적인 UI 또는 동기화 문제는 재실행만으로 해결되는 경우가 많습니다.",
+            },
+            {
+              title: "기기 연결 상태를 확인하세요.",
+              body: "로그인, 동기화, 일부 복구 흐름에는 네트워크 연결이 필요합니다.",
+            },
+            {
+              title: "음성 설치 상태를 확인하세요.",
+              body: "발음 재생이 되지 않으면 먼저 지원되는 시스템 음성을 설치하거나 선택해 주세요.",
+            },
+            {
+              title: "언어 설정을 확인하세요.",
+              body: "일일 목표, 레벨, 알림은 학습 언어별로 따로 저장됩니다.",
+            },
+          ],
+          reportingTitle: "문제를 제보할 때 알려주세요",
+          reportingItems: [
+            "iPhone인지 Android인지 알려주세요.",
+            "가능하다면 프로필 화면에서 앱 버전을 함께 알려주세요.",
+            "원래 기대한 동작과 실제로 일어난 일을 적어주세요.",
+            "가능하면 스크린샷이나 화면 녹화를 첨부해 주세요.",
+            "문제가 발생했을 때 사용 중이던 학습 언어를 알려주세요.",
+          ],
+          privacyTitle: "개인정보 처리방침",
+          privacyIntro:
+            "이 문서는 Vocamine이 어떤 정보를 처리할 수 있는지, 그리고 그 정보를 어떻게 사용하는지 간단히 설명합니다.",
+          privacySections: [
+            {
+              title: "수집하거나 저장할 수 있는 정보",
+              items: [
+                "계정 정보: Apple 또는 Google 로그인으로 연결된 식별자, 이메일, 프로필 이름 등",
+                "학습 설정: 학습 언어, CEFR 레벨, 일일 목표, 관심 주제, 알림 설정, 음성 설정 등",
+                "학습 데이터: 세션 기록, 복습 기록, 단어 진도, streak, 요약 통계 등",
+                "기기 및 사용 정보: 앱 동작에 필요한 기본 기술 정보와 오류 대응을 위한 제한된 정보",
+                "광고 관련 정보: 앱에 광고가 표시될 경우 광고 제공업체가 기기 식별자나 광고 관련 정보를 처리할 수 있음",
+                "지원 문의 정보: 이메일로 문의할 때 사용자가 직접 제공한 내용",
+              ],
+            },
+            {
+              title: "정보를 사용하는 목적",
+              items: [
+                "학습 진행 상황 저장 및 기기 간 동기화",
+                "레벨, 관심사, 목표에 맞춘 개인화된 학습 경험 제공",
+                "알림 및 리마인더 제공",
+                "앱 품질 개선, 오류 대응, 부정 사용 방지",
+                "광고 노출 및 관련 기능 제공",
+              ],
+            },
+            {
+              title: "제3자 서비스와 정보 공유",
+              items: [
+                "계정 및 데이터 동기화를 위해 Supabase와 같은 백엔드 서비스를 사용할 수 있습니다.",
+                "로그인은 Apple 또는 Google 같은 인증 제공업체를 통해 처리될 수 있습니다.",
+                "광고가 표시되는 경우 AdMob 등 제3자 광고 서비스가 자체 정책에 따라 데이터를 처리할 수 있습니다.",
+                "Vocamine은 법적 의무 이행이나 서비스 제공에 필요한 경우를 제외하고 사용자의 개인정보를 판매하지 않습니다.",
+              ],
+            },
+            {
+              title: "보관 및 삭제",
+              paragraphs: [
+                "학습 데이터의 일부는 기기 안에 로컬로 저장되며, 계정 기능을 사용하는 경우 서버에 동기화될 수 있습니다.",
+                "앱 삭제, 학습 기록 초기화, 또는 삭제 요청에 따라 일부 또는 전체 데이터가 제거될 수 있습니다. 삭제 요청은 gox@me.com 으로 보내주세요.",
+              ],
+            },
+            {
+              title: "문의",
+              paragraphs: [
+                "개인정보 처리방침과 데이터 처리에 관한 문의는 gox@me.com 으로 연락해 주세요.",
+              ],
+            },
+          ],
+          termsTitle: "이용약관",
+          termsIntro:
+            "이 문서는 Vocamine 사용에 적용되는 기본 조건을 설명합니다.",
+          termsSections: [
+            {
+              title: "서비스 이용",
+              paragraphs: [
+                "Vocamine은 개인 학습 목적의 어휘 학습 서비스를 제공합니다. 앱을 사용하면 본 약관에 동의한 것으로 봅니다.",
+              ],
+            },
+            {
+              title: "계정과 책임",
+              items: [
+                "로그인 기능을 사용하는 경우 본인 계정의 보안 유지에 대한 책임은 사용자에게 있습니다.",
+                "사용자는 관련 법령을 위반하거나 앱 운영을 방해하는 방식으로 서비스를 이용해서는 안 됩니다.",
+              ],
+            },
+            {
+              title: "콘텐츠와 서비스 변경",
+              items: [
+                "단어, 예문, 발음, 기능 구성은 언제든 변경될 수 있습니다.",
+                "서비스는 개선, 유지보수, 오류 수정 등의 이유로 일부 변경되거나 중단될 수 있습니다.",
+              ],
+            },
+            {
+              title: "광고와 제3자 서비스",
+              paragraphs: [
+                "앱에는 배너, 전면, 보상형 광고가 포함될 수 있으며, 일부 기능은 제3자 서비스에 의존할 수 있습니다.",
+              ],
+            },
+            {
+              title: "책임의 제한",
+              paragraphs: [
+                "Vocamine은 교육 및 학습 보조를 위한 앱이며, 특정 학습 성과나 무중단 서비스를 보장하지 않습니다. 관련 법이 허용하는 범위에서 서비스 사용에 따른 간접적 손해에 대한 책임은 제한됩니다.",
+              ],
+            },
+            {
+              title: "문의",
+              paragraphs: [
+                "약관에 관한 문의는 gox@me.com 으로 보내주세요.",
+              ],
+            },
+          ],
+          footer: "Vocamine 지원 페이지 · 마지막 업데이트: 2026년 3월 7일",
+          mailto: {
+            navEmail: "mailto:gox@me.com?subject=Vocamine%20%EB%AC%B8%EC%9D%98",
+            heroPrimary: "mailto:gox@me.com?subject=Vocamine%20%EC%A7%80%EC%9B%90%20%EB%AC%B8%EC%9D%98",
+            heroSecondary: "mailto:gox@me.com?subject=Vocamine%20%EB%B2%84%EA%B7%B8%20%EC%A0%9C%EB%B3%B4",
+            quickBug: "mailto:gox@me.com?subject=Vocamine%20%EB%B2%84%EA%B7%B8%20%EC%A0%9C%EB%B3%B4",
+            quickQuestion: "mailto:gox@me.com?subject=Vocamine%20%EB%AC%B8%EC%9D%98",
+            quickFeedback: "mailto:gox@me.com?subject=Vocamine%20%ED%94%BC%EB%93%9C%EB%B0%B1",
+          },
+        },
+        en: {
+          title: "Vocamine Support",
+          metaDescription:
+            "Support page for Vocamine, a science-backed vocabulary learning app built around spaced repetition.",
+          navPrimary: "Primary",
+          langSwitch: "Language switch",
+          navFaq: "FAQ",
+          navTroubleshooting: "Troubleshooting",
+          navPrivacy: "Privacy",
+          navTerms: "Terms",
+          navEmail: "Email support",
+          eyebrow: "Support",
+          heroTitle: "Help for your daily vocabulary routine.",
+          heroBody:
+            "Vocamine helps you build long-term vocabulary through spaced repetition, level-based learning, and practical examples. If something is not working, start with the quick links and FAQs below.",
+          heroPrimary: "Email support",
+          heroSecondary: "Report a bug",
+          offersTitle: "What Vocamine offers",
+          offersBody1:
+            "Vocamine is a vocabulary learning app built around science-backed review. It currently supports English and French learning with personalized daily goals, CEFR-based difficulty, spaced repetition, pronunciation, example sentences, and word-form support.",
+          offersBody2:
+            "Core study flows are designed to work offline after vocabulary data has been loaded on your device, so you can keep learning without a stable connection.",
+          quickLinksTitle: "Quick links",
+          quickBugTitle: "Report a bug",
+          quickBugBody: "Share steps, screenshots, and device details.",
+          quickQuestionTitle: "Ask a question",
+          quickQuestionBody: "Contact support for help with learning, settings, or reminders.",
+          quickFeedbackTitle: "Send feedback",
+          quickFeedbackBody: "Share ideas, feature requests, or general feedback by email.",
+          faqTitle: "FAQ",
+          faq1Q: "Why am I not seeing new words?",
+          faq1A:
+            "You may have finished the current CEFR level for your learning language, or today's queue may already be complete. Check your level and daily goal in the app profile, then continue with the next level or additional learning.",
+          faq2Q: "Why is audio unavailable?",
+          faq2A:
+            "Pronunciation depends on voices installed on your device. If playback does not start, open the voice settings in the app and install an offline voice for the learning language.",
+          faq3Q: "Can I switch between English and French?",
+          faq3A:
+            "Yes. Vocamine keeps language-specific settings, so your level, daily goal, notifications, and progress can be managed separately.",
+          faq4Q: "Does the app work offline?",
+          faq4A:
+            "Yes for core study after vocabulary data is available on the device. Some account, sync, and recovery features still require connectivity.",
+          faq5Q: "How do reminders work?",
+          faq5A:
+            "Reminders are configured per learning language. You can enable or change them from the profile screen inside the app.",
+          troubleshootingTitle: "Troubleshooting",
+          steps: [
+            {
+              title: "Restart the app.",
+              body: "Temporary UI or sync issues are often resolved by relaunching Vocamine.",
+            },
+            {
+              title: "Check your device connection.",
+              body: "Sign-in, sync, and some recovery flows need an active network connection.",
+            },
+            {
+              title: "Verify voice availability.",
+              body: "If pronunciation fails, install or select a supported system voice first.",
+            },
+            {
+              title: "Review your language settings.",
+              body: "Daily goal, level, and notifications are stored per learning language.",
+            },
+          ],
+          reportingTitle: "When reporting a problem",
+          reportingItems: [
+            "Tell us whether you are on iPhone or Android.",
+            "Include the app version if you can find it in the profile screen.",
+            "Describe what you expected and what happened instead.",
+            "Attach a screenshot or screen recording when possible.",
+            "Mention the learning language you were using when the issue happened.",
+          ],
+          privacyTitle: "Privacy Policy",
+          privacyIntro:
+            "This policy explains what information Vocamine may process and how it is used.",
+          privacySections: [
+            {
+              title: "Information we may collect or store",
+              items: [
+                "Account information such as Apple or Google sign-in identifiers, email address, and profile name",
+                "Learning settings such as target language, CEFR level, daily goal, interests, notification preferences, and voice settings",
+                "Learning data such as session history, review history, progress, streaks, and summary statistics",
+                "Limited device and technical information needed to operate the app and investigate issues",
+                "Advertising-related data if ads are shown in the app through third-party providers",
+                "Information you provide directly when contacting support by email",
+              ],
+            },
+            {
+              title: "How we use information",
+              items: [
+                "To provide the app, save progress, and sync data across devices",
+                "To personalize review, levels, interests, and daily study plans",
+                "To send reminders and maintain core app functionality",
+                "To improve stability, respond to issues, and prevent abuse",
+                "To display ads and support ad-related app features",
+              ],
+            },
+            {
+              title: "Sharing and third-party services",
+              items: [
+                "Vocamine may use backend providers such as Supabase for account and sync features.",
+                "Sign-in may be handled through Apple or Google.",
+                "If ads are shown, third-party ad services such as AdMob may process device or advertising information under their own policies.",
+                "Vocamine does not sell personal information except where disclosure is required to provide the service or comply with law.",
+              ],
+            },
+            {
+              title: "Retention and deletion",
+              paragraphs: [
+                "Some data is stored locally on your device, and some may be synced to remote infrastructure if you use account-based features.",
+                "Data may be removed when you delete the app, reset learning history, or request deletion. For deletion requests, email gox@me.com.",
+              ],
+            },
+            {
+              title: "Contact",
+              paragraphs: [
+                "For privacy questions or data requests, contact gox@me.com.",
+              ],
+            },
+          ],
+          termsTitle: "Terms of Use",
+          termsIntro:
+            "These terms describe the basic rules for using Vocamine.",
+          termsSections: [
+            {
+              title: "Using the service",
+              paragraphs: [
+                "Vocamine is provided for personal language learning and educational use. By using the app, you agree to these terms.",
+              ],
+            },
+            {
+              title: "Accounts and responsibilities",
+              items: [
+                "If you use sign-in features, you are responsible for maintaining the security of your account.",
+                "You may not use the service in a way that violates law, interferes with normal operation, or abuses the app or other users.",
+              ],
+            },
+            {
+              title: "Content and service changes",
+              items: [
+                "Vocabulary data, examples, pronunciation, and features may change over time.",
+                "The service may be updated, limited, or interrupted for maintenance, improvements, or bug fixes.",
+              ],
+            },
+            {
+              title: "Ads and third-party services",
+              paragraphs: [
+                "The app may include banner, interstitial, or rewarded ads, and some features may depend on third-party services.",
+              ],
+            },
+            {
+              title: "Limitation of liability",
+              paragraphs: [
+                "Vocamine is an educational support app and does not guarantee specific learning outcomes or uninterrupted availability. To the extent permitted by law, liability for indirect or consequential damages is limited.",
+              ],
+            },
+            {
+              title: "Contact",
+              paragraphs: [
+                "For terms-related questions, contact gox@me.com.",
+              ],
+            },
+          ],
+          footer: "Vocamine Support Page · Last updated March 7, 2026",
+          mailto: {
+            navEmail: "mailto:gox@me.com?subject=Vocamine%20Support",
+            heroPrimary: "mailto:gox@me.com?subject=Vocamine%20Support",
+            heroSecondary: "mailto:gox@me.com?subject=Vocamine%20Bug%20Report",
+            quickBug: "mailto:gox@me.com?subject=Vocamine%20Bug%20Report",
+            quickQuestion: "mailto:gox@me.com?subject=Vocamine%20Question",
+            quickFeedback: "mailto:gox@me.com?subject=Vocamine%20Feedback",
+          },
+        },
+        fr: {
+          title: "Assistance Vocamine",
+          metaDescription:
+            "Page d'assistance de Vocamine, l'application de vocabulaire fondée sur la répétition espacée.",
+          navPrimary: "Navigation principale",
+          langSwitch: "Changer de langue",
+          navFaq: "FAQ",
+          navTroubleshooting: "Dépannage",
+          navPrivacy: "Confidentialité",
+          navTerms: "Conditions",
+          navEmail: "Contacter l'assistance",
+          eyebrow: "Assistance",
+          heroTitle: "Aide pour votre routine quotidienne de vocabulaire.",
+          heroBody:
+            "Vocamine vous aide à construire un vocabulaire durable grâce à la répétition espacée, à l'apprentissage par niveau et à des exemples concrets. En cas de problème, commencez par les liens rapides et la FAQ ci-dessous.",
+          heroPrimary: "Envoyer un e-mail",
+          heroSecondary: "Signaler un bug",
+          offersTitle: "Ce que propose Vocamine",
+          offersBody1:
+            "Vocamine est une application de vocabulaire conçue autour d'une révision fondée sur la science. Elle prend actuellement en charge l'anglais et le français avec des objectifs quotidiens personnalisés, une difficulté basée sur le CECR, la répétition espacée, la prononciation, des exemples et les formes des mots.",
+          offersBody2:
+            "Les principaux parcours d'apprentissage fonctionnent hors ligne une fois les données de vocabulaire chargées sur votre appareil, ce qui vous permet de continuer même sans connexion stable.",
+          quickLinksTitle: "Liens rapides",
+          quickBugTitle: "Signaler un bug",
+          quickBugBody: "Ajoutez les étapes, des captures d'écran et les détails de l'appareil.",
+          quickQuestionTitle: "Poser une question",
+          quickQuestionBody: "Contactez l'assistance pour l'apprentissage, les réglages ou les rappels.",
+          quickFeedbackTitle: "Envoyer un avis",
+          quickFeedbackBody: "Partagez vos idées, demandes de fonctionnalités ou retours par e-mail.",
+          faqTitle: "FAQ",
+          faq1Q: "Pourquoi je ne vois pas de nouveaux mots ?",
+          faq1A:
+            "Vous avez peut-être terminé le niveau CECR actuel pour votre langue d'apprentissage, ou la file du jour est déjà terminée. Vérifiez votre niveau et votre objectif quotidien dans le profil, puis passez au niveau suivant ou à l'apprentissage supplémentaire.",
+          faq2Q: "Pourquoi l'audio est-il indisponible ?",
+          faq2A:
+            "La prononciation dépend des voix installées sur votre appareil. Si la lecture ne démarre pas, ouvrez les réglages de voix dans l'application et installez une voix hors ligne pour la langue étudiée.",
+          faq3Q: "Puis-je alterner entre l'anglais et le français ?",
+          faq3A:
+            "Oui. Vocamine conserve des réglages par langue, ce qui permet de gérer séparément le niveau, l'objectif quotidien, les notifications et la progression.",
+          faq4Q: "L'application fonctionne-t-elle hors ligne ?",
+          faq4A:
+            "Oui pour l'apprentissage principal une fois les données de vocabulaire disponibles sur l'appareil. Certaines fonctions de compte, de synchronisation et de récupération nécessitent encore une connexion.",
+          faq5Q: "Comment fonctionnent les rappels ?",
+          faq5A:
+            "Les rappels sont configurés par langue d'apprentissage. Vous pouvez les activer ou les modifier depuis l'écran profil dans l'application.",
+          troubleshootingTitle: "Dépannage",
+          steps: [
+            {
+              title: "Redémarrez l'application.",
+              body: "Les problèmes temporaires d'interface ou de synchronisation se résolvent souvent après un redémarrage de Vocamine.",
+            },
+            {
+              title: "Vérifiez la connexion de votre appareil.",
+              body: "La connexion est nécessaire pour la connexion au compte, la synchronisation et certains flux de récupération.",
+            },
+            {
+              title: "Vérifiez la disponibilité des voix.",
+              body: "Si la prononciation ne fonctionne pas, installez ou sélectionnez d'abord une voix système compatible.",
+            },
+            {
+              title: "Vérifiez vos réglages de langue.",
+              body: "L'objectif quotidien, le niveau et les notifications sont enregistrés séparément pour chaque langue.",
+            },
+          ],
+          reportingTitle: "Avant de signaler un problème",
+          reportingItems: [
+            "Indiquez si vous utilisez un iPhone ou un appareil Android.",
+            "Ajoutez la version de l'application si vous pouvez la trouver dans le profil.",
+            "Décrivez ce que vous attendiez et ce qui s'est produit à la place.",
+            "Ajoutez une capture d'écran ou un enregistrement d'écran si possible.",
+            "Précisez la langue d'apprentissage utilisée au moment du problème.",
+          ],
+          privacyTitle: "Politique de confidentialité",
+          privacyIntro:
+            "Ce document explique quelles informations Vocamine peut traiter et comment elles sont utilisées.",
+          privacySections: [
+            {
+              title: "Informations que nous pouvons collecter ou stocker",
+              items: [
+                "Informations de compte comme les identifiants Apple ou Google, l'adresse e-mail et le nom de profil",
+                "Réglages d'apprentissage comme la langue étudiée, le niveau CECR, l'objectif quotidien, les centres d'intérêt, les notifications et la voix",
+                "Données d'apprentissage comme l'historique des sessions, des révisions, la progression, les streaks et les statistiques",
+                "Informations techniques limitées nécessaires au fonctionnement de l'application et à la résolution des problèmes",
+                "Données liées à la publicité si des annonces sont affichées via des prestataires tiers",
+                "Informations que vous fournissez directement lorsque vous contactez l'assistance par e-mail",
+              ],
+            },
+            {
+              title: "Utilisation des informations",
+              items: [
+                "Fournir l'application, enregistrer la progression et synchroniser les données entre appareils",
+                "Personnaliser les révisions, les niveaux, les centres d'intérêt et les plans d'étude",
+                "Envoyer des rappels et assurer le fonctionnement principal de l'application",
+                "Améliorer la stabilité, répondre aux incidents et prévenir les abus",
+                "Afficher des publicités et gérer les fonctions associées",
+              ],
+            },
+            {
+              title: "Partage et services tiers",
+              items: [
+                "Vocamine peut utiliser des services backend comme Supabase pour le compte et la synchronisation.",
+                "La connexion peut être gérée via Apple ou Google.",
+                "Si des publicités sont affichées, des services tiers comme AdMob peuvent traiter certaines données selon leurs propres politiques.",
+                "Vocamine ne vend pas vos informations personnelles, sauf si cela est nécessaire pour fournir le service ou respecter une obligation légale.",
+              ],
+            },
+            {
+              title: "Conservation et suppression",
+              paragraphs: [
+                "Une partie des données est stockée localement sur votre appareil et une autre peut être synchronisée si vous utilisez les fonctions liées au compte.",
+                "Les données peuvent être supprimées lorsque vous désinstallez l'application, réinitialisez votre historique d'apprentissage ou demandez une suppression. Pour une demande de suppression, écrivez à gox@me.com.",
+              ],
+            },
+            {
+              title: "Contact",
+              paragraphs: [
+                "Pour toute question relative à la confidentialité ou aux données, contactez gox@me.com.",
+              ],
+            },
+          ],
+          termsTitle: "Conditions d'utilisation",
+          termsIntro:
+            "Ces conditions décrivent les règles de base applicables à l'utilisation de Vocamine.",
+          termsSections: [
+            {
+              title: "Utilisation du service",
+              paragraphs: [
+                "Vocamine est fourni pour un usage personnel d'apprentissage des langues et à des fins éducatives. En utilisant l'application, vous acceptez ces conditions.",
+              ],
+            },
+            {
+              title: "Comptes et responsabilités",
+              items: [
+                "Si vous utilisez les fonctions de connexion, vous êtes responsable de la sécurité de votre compte.",
+                "Vous ne devez pas utiliser le service d'une manière illégale, abusive ou perturbant le fonctionnement normal de l'application.",
+              ],
+            },
+            {
+              title: "Contenu et évolution du service",
+              items: [
+                "Le vocabulaire, les exemples, la prononciation et les fonctionnalités peuvent évoluer à tout moment.",
+                "Le service peut être mis à jour, limité ou interrompu pour maintenance, amélioration ou correction de bugs.",
+              ],
+            },
+            {
+              title: "Publicité et services tiers",
+              paragraphs: [
+                "L'application peut inclure des bannières, des interstitiels ou des publicités avec récompense, et certaines fonctions peuvent dépendre de services tiers.",
+              ],
+            },
+            {
+              title: "Limitation de responsabilité",
+              paragraphs: [
+                "Vocamine est une application d'aide à l'apprentissage et ne garantit ni résultat pédagogique particulier ni disponibilité ininterrompue. Dans la mesure permise par la loi, la responsabilité pour les dommages indirects ou consécutifs est limitée.",
+              ],
+            },
+            {
+              title: "Contact",
+              paragraphs: [
+                "Pour toute question relative aux conditions, contactez gox@me.com.",
+              ],
+            },
+          ],
+          footer: "Page d’assistance Vocamine · Mise à jour le 7 mars 2026",
+          mailto: {
+            navEmail: "mailto:gox@me.com?subject=Assistance%20Vocamine",
+            heroPrimary: "mailto:gox@me.com?subject=Assistance%20Vocamine",
+            heroSecondary: "mailto:gox@me.com?subject=Signalement%20de%20bug%20Vocamine",
+            quickBug: "mailto:gox@me.com?subject=Signalement%20de%20bug%20Vocamine",
+            quickQuestion: "mailto:gox@me.com?subject=Question%20Vocamine",
+            quickFeedback: "mailto:gox@me.com?subject=Retour%20Vocamine",
+          },
+        },
+      };
+
+      const supportedLanguages = ["ko", "en", "fr"];
+      const metaDescription = document.querySelector('meta[name="description"]');
+      const languageButtons = Array.from(document.querySelectorAll("[data-lang-option]"));
+      const primaryNav = document.getElementById("primary-nav");
+      const languageSwitch = document.getElementById("language-switch");
+      const stepsList = document.getElementById("steps-list");
+      const reportingList = document.getElementById("reporting-list");
+      const privacyContent = document.getElementById("privacy-content");
+      const termsContent = document.getElementById("terms-content");
+      const mailLinks = {
+        navEmail: document.getElementById("nav-email-link"),
+        heroPrimary: document.getElementById("hero-primary-link"),
+        heroSecondary: document.getElementById("hero-secondary-link"),
+        quickBug: document.getElementById("quick-bug-link"),
+        quickQuestion: document.getElementById("quick-question-link"),
+        quickFeedback: document.getElementById("quick-feedback-link"),
+      };
+
+      const detectLanguage = () => {
+        const urlLanguage = new URL(window.location.href).searchParams.get("lang");
+        const candidate = (urlLanguage || navigator.language || "en").toLowerCase();
+        if (candidate.startsWith("ko")) return "ko";
+        if (candidate.startsWith("fr")) return "fr";
+        return "en";
+      };
+
+      const renderSteps = (items) => {
+        stepsList.innerHTML = "";
+        items.forEach((item) => {
+          const li = document.createElement("li");
+          const content = document.createElement("div");
+          const title = document.createElement("strong");
+          const body = document.createElement("p");
+
+          title.textContent = item.title;
+          body.textContent = item.body;
+
+          content.appendChild(title);
+          content.appendChild(body);
+          li.appendChild(content);
+          stepsList.appendChild(li);
+        });
+      };
+
+      const renderSimpleList = (element, items) => {
+        element.innerHTML = "";
+        items.forEach((item) => {
+          const li = document.createElement("li");
+          li.textContent = item;
+          element.appendChild(li);
+        });
+      };
+
+      const renderPolicySections = (element, sections) => {
+        element.innerHTML = "";
+        sections.forEach((section) => {
+          const wrapper = document.createElement("section");
+          wrapper.className = "policy-group";
+
+          const title = document.createElement("h3");
+          title.textContent = section.title;
+          wrapper.appendChild(title);
+
+          if (Array.isArray(section.paragraphs)) {
+            section.paragraphs.forEach((text) => {
+              const paragraph = document.createElement("p");
+              paragraph.textContent = text;
+              wrapper.appendChild(paragraph);
+            });
+          }
+
+          if (Array.isArray(section.items)) {
+            const list = document.createElement("ul");
+            section.items.forEach((text) => {
+              const item = document.createElement("li");
+              item.textContent = text;
+              list.appendChild(item);
+            });
+            wrapper.appendChild(list);
+          }
+
+          element.appendChild(wrapper);
+        });
+      };
+
+      const setLanguage = (language) => {
+        const nextLanguage = supportedLanguages.includes(language) ? language : "en";
+        const dict = translations[nextLanguage];
+
+        document.documentElement.lang = nextLanguage;
+        document.title = dict.title;
+        metaDescription.setAttribute("content", dict.metaDescription);
+        primaryNav.setAttribute("aria-label", dict.navPrimary);
+        languageSwitch.setAttribute("aria-label", dict.langSwitch);
+
+        document.querySelectorAll("[data-i18n]").forEach((element) => {
+          const key = element.getAttribute("data-i18n");
+          if (key && Object.prototype.hasOwnProperty.call(dict, key)) {
+            element.textContent = dict[key];
+          }
+        });
+
+        renderSteps(dict.steps);
+        renderSimpleList(reportingList, dict.reportingItems);
+        renderPolicySections(privacyContent, dict.privacySections);
+        renderPolicySections(termsContent, dict.termsSections);
+
+        Object.entries(mailLinks).forEach(([key, element]) => {
+          if (!element) {
+            return;
+          }
+          const href = dict.mailto && dict.mailto[key];
+          if (href) {
+            element.setAttribute("href", href);
+          }
+        });
+
+        languageButtons.forEach((button) => {
+          const isActive = button.getAttribute("data-lang-option") === nextLanguage;
+          button.classList.toggle("is-active", isActive);
+          button.setAttribute("aria-pressed", isActive ? "true" : "false");
+        });
+
+        const url = new URL(window.location.href);
+        url.searchParams.set("lang", nextLanguage);
+        window.history.replaceState({}, "", url);
+      };
+
+      languageButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const nextLanguage = button.getAttribute("data-lang-option");
+          setLanguage(nextLanguage);
+        });
+      });
+
+      setLanguage(detectLanguage());
+    </script>
+  </body>
+</html>
