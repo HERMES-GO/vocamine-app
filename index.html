@@ -62,12 +62,18 @@
       }
 
       .brand {
-        font-family: Georgia, "Times New Roman", serif;
+        font-family: "Times New Roman", Times, serif;
         font-size: clamp(2rem, 4vw, 3.4rem);
         font-style: italic;
-        font-weight: 600;
+        font-weight: 700;
         letter-spacing: -0.03em;
         text-decoration: none;
+      }
+
+      .brand-word {
+        font-family: "Times New Roman", Times, serif;
+        font-style: italic;
+        font-weight: 700;
       }
 
       .nav-actions {
@@ -1148,6 +1154,56 @@
         quickFeedback: document.getElementById("quick-feedback-link"),
       };
 
+      const BRAND_WORD = "Vocamine";
+
+      const styleBrandWordOccurrences = (root) => {
+        const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+          acceptNode(node) {
+            const text = node.nodeValue;
+            const parent = node.parentElement;
+
+            if (!text || !text.includes(BRAND_WORD) || !parent) {
+              return NodeFilter.FILTER_REJECT;
+            }
+
+            if (parent.closest("script, style, .brand-word")) {
+              return NodeFilter.FILTER_REJECT;
+            }
+
+            return NodeFilter.FILTER_ACCEPT;
+          },
+        });
+
+        const textNodes = [];
+        while (walker.nextNode()) {
+          textNodes.push(walker.currentNode);
+        }
+
+        textNodes.forEach((node) => {
+          const text = node.nodeValue || "";
+          const parts = text.split(BRAND_WORD);
+          if (parts.length === 1 || !node.parentNode) {
+            return;
+          }
+
+          const fragment = document.createDocumentFragment();
+          parts.forEach((part, index) => {
+            if (part) {
+              fragment.appendChild(document.createTextNode(part));
+            }
+
+            if (index < parts.length - 1) {
+              const span = document.createElement("span");
+              span.className = "brand-word";
+              span.textContent = BRAND_WORD;
+              fragment.appendChild(span);
+            }
+          });
+
+          node.parentNode.replaceChild(fragment, node);
+        });
+      };
+
       const detectLanguage = () => {
         const urlLanguage = new URL(window.location.href).searchParams.get("lang");
         const candidate = (urlLanguage || navigator.language || "en").toLowerCase();
@@ -1252,6 +1308,8 @@
           button.classList.toggle("is-active", isActive);
           button.setAttribute("aria-pressed", isActive ? "true" : "false");
         });
+
+        styleBrandWordOccurrences(document.body);
 
         const url = new URL(window.location.href);
         url.searchParams.set("lang", nextLanguage);
